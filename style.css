@@ -54,3 +54,7 @@ canvas {
   margin-right: 40px;
 }
 
+#absolute{
+  position: absolute;
+  bottom: 0;
+}
