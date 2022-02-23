@@ -12,7 +12,7 @@ canvas {
   position: absolute;
   width: 50%;
   height: 100%;
-  cursor: pointer;
+  cursor: default;
 }
 
 #empty-area {
