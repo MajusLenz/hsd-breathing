@@ -128,11 +128,6 @@ function fillLung() {
   halfFullDiameter += 0.1;
 }
 
-/** Stops breathing. Shows overlay with restart-countdown */
-function triggerEndState() {
-  // TODO
-}
-
 /** makes lung smaller by tiny amount */
 function emptyLung() {
   halfFullDiameter -= 0.1;
@@ -150,3 +145,10 @@ jQuery(window).resize(function() {
   setup();
 });
 
+
+// ENDSTATE:
+
+/** Stops breathing. Shows overlay with restart-countdown */
+function triggerEndState() {
+  // TODO
+}
