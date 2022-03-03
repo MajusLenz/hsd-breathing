@@ -95,11 +95,9 @@ function drawLung() {
   var currentDiameter = computeCircleDiameter();
 
   if (currentDiameter <= tooEmptyDiameter) {
-    endStateIsActive = true;
     triggerEndState();
   }
   if (currentDiameter >= tooFullDiameter) {
-    endStateIsActive = true;
     triggerEndState();
   }
 
@@ -187,6 +185,8 @@ jQuery(window).resize(function () {
 
 /** Stops breathing. Shows overlay with restart-countdown */
 function triggerEndState() {
+  endStateIsActive = true;
+
   document.getElementById("endscreen").style.display = "flex";
 
   var timeLeft = sessionStorage.getItem("countdown");
@@ -221,11 +221,10 @@ function triggerEndState() {
       + (minutes > 9 ? "" : "0") + minutes + ":" + (seconds > 9 ? "" : "0") + seconds + "";
 
     // If the count down is finished, write some text
-    if (distance < 0) {
+    if (distance <= 0) {
       clearInterval(x);
-      loop();
       sessionStorage.removeItem("countdown");
-      document.getElementById("endscreen").style.display = "none";
+      window.location.reload();
     }
   }, 1000);
 }
