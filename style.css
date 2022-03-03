@@ -1,9 +1,21 @@
+@font-face {
+  font-family: 'PPNeueMontreal-Medium';
+  src:  url('assets/fonts/PPNeueMontreal/PPNeueMontreal-Medium.woff2') format('woff2'),
+        url('assets/fonts/PPNeueMontreal/PPNeueMontreal-Medium.woff') format('woff');
+}
+@font-face {
+  font-family: 'PPNeueMontreal-Regular';
+  src:  url('assets/fonts/PPNeueMontreal/PPNeueMontreal-Regular.woff2') format('woff2'),
+  url('assets/fonts/PPNeueMontreal/PPNeueMontreal-Regular.woff') format('woff');
+}
+
 html, body {
   margin: 0;
   padding: 0;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  font-family: PPNeueMontreal-Regular, Arial, sans-serif;
 }
 
 canvas {
@@ -22,18 +34,20 @@ canvas {
 
 }
 #empty-area:hover .fake-button {
-  text-decoration: underline;
-  text-decoration-color: white;
-  text-decoration-thickness: 2px;
+  /*text-decoration: underline;*/
+  /*text-decoration-color: white;*/
+  /*text-decoration-thickness: 2px;*/
+  font-family: PPNeueMontreal-Medium, Arial, sans-serif;
 }
 
 #fill-area {
   right: 0;
 }
 #fill-area:hover .fake-button {
-  text-decoration: underline;
-  text-decoration-color: black;
-  text-decoration-thickness: 2px;
+  /*text-decoration: underline;*/
+  /*text-decoration-color: black;*/
+  /*text-decoration-thickness: 2px;*/
+  font-family: PPNeueMontreal-Medium, Arial, sans-serif;
 }
 
 .fake-button {
@@ -41,8 +55,6 @@ canvas {
   background: none!important;
   border: none;
   padding: 0!important;
-
-  /* TODO style font ... */
   font-size: 25pt;
 }
 
@@ -56,6 +68,7 @@ canvas {
   float: right;
   margin-right: 40px;
 }
+
 #endscreen{
   height: 100vh;
   width: 100vw;

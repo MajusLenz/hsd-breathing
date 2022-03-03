@@ -6,23 +6,26 @@ var centerX;
 var centerY;
 
 var maxBreathingDiameter;
+var originalHalfFullDiameter;
 var halfFullDiameter;
-var positionOnSinusCurve = 0;
+var tooEmptyDiameter;
+var tooFullDiameter;
 
-var breathingSpeed;
+var positionOnSinusCurve = 0;
 
 var screenOrientation;
 
 var lungIsBeingFilled = false;
 var lungIsBeingEmptied = false;
 var mouseIsInsideCanvas = false;
+var endStateIsActive = false;
 
 /**
  * P5.js Method
  * call once before start
  */
 function preload() {
-  // todo add font
+
 }
 
 /**
@@ -31,20 +34,23 @@ function preload() {
  */
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  noStroke();
 
   centerX = windowWidth / 2;
   centerY = windowHeight / 2;
 
   if (centerX > centerY) {
     screenOrientation = "landscape";
-    halfFullDiameter = centerY;
+    originalHalfFullDiameter = centerY;
   }
   else {
     screenOrientation = "portrait";
-    halfFullDiameter = centerX;
+    originalHalfFullDiameter = centerX;
   }
 
-  noStroke();
+  halfFullDiameter = originalHalfFullDiameter;
+  tooEmptyDiameter = originalHalfFullDiameter /6;
+  tooFullDiameter = originalHalfFullDiameter *2.3;
 
   // Check if Countdown is active
   if (sessionStorage.getItem("countdown")) {
@@ -59,6 +65,9 @@ function setup() {
  * call once every frame
  */
 function draw() {
+  if (endStateIsActive) {
+    return;
+  }
   computeInput();
   drawBackground();
   drawLung();
@@ -75,40 +84,56 @@ function drawBackground() {
   if (lungIsBeingEmptied) {
     fill("#1a1a1a");
   }
+
   rect(0, 0, centerX, windowHeight);
 }
 
 /** computes state of breathing animation and renders lung */
 function drawLung() {
-  breathingSpeed = 1;
+  maxBreathingDiameter = halfFullDiameter / 6;
 
-  fill("rgba(0,0,255,1)");
-  circle(centerX, centerY, computeCircleDiameter());
+  var currentDiameter = computeCircleDiameter();
 
-  fill("rgba(0,0,255,0.5)");
-  circle(centerX, centerY, computeCircleDiameter(-0.2) * 1.1);
-
-  fill("rgba(0,0,255,0.45)");
-  circle(centerX, centerY, computeCircleDiameter(-0.4) * 1.2);
-
-  fill("rgba(0,0,255,0.35)");
-  circle(centerX, centerY, computeCircleDiameter(-0.6) * 1.3);
-
-  fill("rgba(0,0,255,0.3)");
-  circle(centerX, centerY, computeCircleDiameter(-0.8) * 1.4);
-
-  positionOnSinusCurve += .02 * breathingSpeed;
-  if ((computeCircleDiameter(-0.8) * 1.4) == 0) {
-    noLoop();
+  if (currentDiameter <= tooEmptyDiameter) {
+    endStateIsActive = true;
     triggerEndState();
-    return;
   }
+  if (currentDiameter >= tooFullDiameter) {
+    endStateIsActive = true;
+    triggerEndState();
+  }
+
+  var transparencyModifier = map(currentDiameter, tooEmptyDiameter, originalHalfFullDiameter, 0, 1, true);
+  var saturation = Math.floor( map(currentDiameter, tooEmptyDiameter, tooFullDiameter, 200, 0, true) );
+  var breathingSpeed = map(currentDiameter, originalHalfFullDiameter, tooFullDiameter, 1, 4, true);
+
+  // draw main circle
+  var transparency = 1 * transparencyModifier;
+  fill("rgba(" + saturation +"," + saturation + ",255," + transparency + ")");
+  circle(centerX, centerY, currentDiameter);
+
+  // draw outer circles
+  transparency = 0.5 * transparencyModifier;
+  fill("rgba(" + saturation +"," + saturation + ",255," + transparency + ")");
+  circle(centerX, centerY, computeCircleDiameter(-0.2) *1.1);
+
+  transparency = 0.45 * transparencyModifier;
+  fill("rgba(" + saturation +"," + saturation + ",255," + transparency + ")");
+  circle(centerX, centerY, computeCircleDiameter(-0.4) *1.2);
+
+  transparency = 0.35 * transparencyModifier;
+  fill("rgba(" + saturation +"," + saturation + ",255," + transparency + ")");
+  circle(centerX, centerY, computeCircleDiameter(-0.6) *1.3);
+
+  transparency = 0.3 * transparencyModifier;
+  fill("rgba(" + saturation +"," + saturation + ",255," + transparency + ")");
+  circle(centerX, centerY, computeCircleDiameter(-0.8) *1.4);
+
+  positionOnSinusCurve += 0.02 * breathingSpeed;
 }
 
 /** math magic */
 function computeCircleDiameter(sinusOffset = 0) {
-  maxBreathingDiameter = halfFullDiameter / 6;
-
   var result = halfFullDiameter + sin(positionOnSinusCurve + sinusOffset) * maxBreathingDiameter;
 
   if (result < 0) {
@@ -142,7 +167,7 @@ function fillLung() {
 
 /** makes lung smaller by tiny amount */
 function emptyLung() {
-  halfFullDiameter -= 0.9;
+  halfFullDiameter -= 0.1;
 }
 
 jQuery(document).mouseleave(function () {
