@@ -1,6 +1,9 @@
 html, body {
   margin: 0;
   padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 canvas {
@@ -53,4 +56,16 @@ canvas {
   float: right;
   margin-right: 40px;
 }
-
+#endscreen{
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(0, 0, 0);
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+}
+#countdown{
+  position: relative;
+  font-size: 100pt;
+  color: white;
+}
