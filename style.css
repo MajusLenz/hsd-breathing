@@ -56,7 +56,6 @@ canvas {
   float: right;
   margin-right: 40px;
 }
-<<<<<<< HEAD
 #endscreen{
   height: 100vh;
   width: 100vw;
@@ -70,10 +69,8 @@ canvas {
   font-size: 100pt;
   color: white;
 }
-=======
 
 #absolute{
   position: absolute;
   bottom: 0;
 }
->>>>>>> documentation
