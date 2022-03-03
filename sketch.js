@@ -75,19 +75,19 @@ function drawBackground() {
 function drawLung() {
   breathingSpeed = 1;
 
-  fill("rgba(255,0,0,1)");
+  fill("rgba(0,0,255,1)");
   circle(centerX, centerY, computeCircleDiameter());
 
-  fill("rgba(255,0,0,0.5)");
+  fill("rgba(0,0,255,0.5)");
   circle(centerX, centerY, computeCircleDiameter(-0.2) *1.1);
 
-  fill("rgba(255,0,0,0.45)");
+  fill("rgba(0,0,255,0.45)");
   circle(centerX, centerY, computeCircleDiameter(-0.4) *1.2);
 
-  fill("rgba(255,0,0,0.35)");
+  fill("rgba(0,0,255,0.35)");
   circle(centerX, centerY, computeCircleDiameter(-0.6) *1.3);
 
-  fill("rgba(255,0,0,0.3)");
+  fill("rgba(0,0,255,0.3)");
   circle(centerX, centerY, computeCircleDiameter(-0.8) *1.4);
 
   positionOnSinusCurve += .02 * breathingSpeed;
@@ -144,3 +144,11 @@ jQuery(document).mouseenter(function () {
 jQuery(window).resize(function() {
   setup();
 });
+
+
+// ENDSTATE:
+
+/** Stops breathing. Shows overlay with restart-countdown */
+function triggerEndState() {
+  // TODO
+}
