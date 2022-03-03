@@ -103,7 +103,7 @@ function drawLung() {
 
   var transparencyModifier = map(currentDiameter, tooEmptyDiameter, originalHalfFullDiameter, 0, 1, true);
   var saturation = Math.floor( map(currentDiameter, tooEmptyDiameter, tooFullDiameter, 200, 0, true) );
-  var breathingSpeed = map(currentDiameter, originalHalfFullDiameter, tooFullDiameter, 1, 4, true);
+  var breathingSpeed = map(currentDiameter, originalHalfFullDiameter, tooFullDiameter, 1, 7, true);
 
   // draw main circle
   var transparency = 1 * transparencyModifier;
@@ -176,9 +176,7 @@ jQuery(document).mouseenter(function () {
   mouseIsInsideCanvas = true;
 });
 
-jQuery(window).resize(function () {
-  setup();
-});
+jQuery(window).resize(setup);
 
 
 // ENDSTATE:
@@ -186,6 +184,8 @@ jQuery(window).resize(function () {
 /** Stops breathing. Shows overlay with restart-countdown */
 function triggerEndState() {
   endStateIsActive = true;
+
+  jQuery(window).off("resize", setup);
 
   document.getElementById("endscreen").style.display = "flex";
 
