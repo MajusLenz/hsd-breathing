@@ -11,24 +11,25 @@
 </head>
 
 <body>
-    <div class="inputs" style="z-index: 1;">
-        <div class="button-area" id="empty-area">
-            <span class="fake-button" id="empty-button">
-                Empty
-            </span>
-        </div>
-        <div class="button-area" id="fill-area">
-            <span class="fake-button" id="fill-button">
-                Fill
-            </span>
-        </div>
+    <div class="inputs">
+        <form class="button-area" id="empty-area" action="/documentation">
+            <input class="fake-button" id="empty-button" type="submit" value="Documentation"></input>
+        </form>
+        <form class="button-area" id="fill-area" action="/application">
+            <input class="fake-button" id="fill-button" type="submit" value="Application"></input>
+        </form>
     </div>
-
-    <div id="endscreen" style="z-index: 10; display: none;">
-        <span id="countdown">COUNTDOWN</span>
-    </div>
-
-    <script src="sketch.js"></script>
 </body>
 
 </html>
+<style>
+    #empty-area {
+        background-color: black;
+    }
+
+    #fill-button,
+    #empty-button {
+        width: 100%;
+        height: 100%;
+    }
+</style>
