@@ -12,11 +12,153 @@
 
 <body>
     <div class="container">
-        <div class="d-flex justify-content-center">
-            <p class="h1 pt-5">HSD Breathing</p>
+        <div class="d-flex justify-content-center flex-column">
+
+            <a id="logo" href="../application" class="row">
+                <img src="./Logo.PNG" id="logoImage" class="pt-auto">
+            </a>
+            <div class="row my-5 bg-black p-5 text-white h1 display-3 " id="introText">
+                Copy Text Intro These/Grundidee- Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+                ipsum dolor sit amet. Lorem ipsum
+            </div>
+            <div class="row my-5">
+                <div class="row">
+                    <h1 class="display-2">Headline H1 - Konzept & Entwürfe</h1>
+                    <h1 class="display-2">(Zusammenführung verschiedene Ansätze)</h1>
+                </div>
+                <div class="col-7 bg-info">
+                    // insert picture
+                </div>
+                <div class="col-5">
+                    <h2 class="">
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+                        ut
+                        labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+                        dolores
+                        et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+                        ut
+                        labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+                        dolores
+                        et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet
+                    </h2>
+                </div>
+            </div>
+            <div class="row my-5">
+                <h1 class="text-center megaBold">78% N₂ 17% O₂ 4% CO₂ 1%</h1>
+            </div>
+            <div class="row bg-black my-5 text-white p-5">
+                <h1 class="display-2 pb-3">Headline H1 - Inspiration/Ideen</h1>
+                <h2 class="display-4">Copy Text - Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                    nonumy eirmod
+                    tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+                    et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+                    dolor sit amet. Lorem ipsum dolor sit amet consetetur sadipscing elitr, sed diam nonumy eirmod
+                    tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+                    et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+                    dolor sit amet
+                </h2>
+                <div class="row">
+                    <div class="col">
+                        <div class="bg-info my-5 img"></div>
+                        <h3>Caption-Bildunterschrift</h3>
+                        <div class="bg-info my-5 img"></div>
+                        <h3>Caption-Bildunterschrift</h3>
+
+                    </div>
+                    <div class="col">
+                        <div class="bg-info my-5 img"></div>
+                        <h3>Caption-Bildunterschrift</h3>
+                        <div class="bg-info my-5 img"></div>
+                        <h3>Caption-Bildunterschrift</h3>
+
+                    </div>
+                    <div class="col">
+                        <div class="bg-info my-5 img"></div>
+                        <h3>Caption-Bildunterschrift</h3>
+                        <div class="bg-info my-5 img"></div>
+                        <h3>Caption-Bildunterschrift</h3>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-5">
+                <h1 class="text-center megaBold">78% N₂ 21% O₂ 0,04% CO₂ 0,96%</h1>
+            </div>
+            <div class="row bg-black text-white mt-5" id="footer">
+                <div class="col-4">
+                    <img src="./Logo.PNG" id="logoImageFooter">
+                </div>
+                <div class="col">
+                    <h4>David Joas</h4>
+                    <h6>Konzept & Programmierung</h3>
+                </div>
+                <div class="col">
+                    <h4>Marius Lenzing</h4>
+                    <h6>Konzept & Programmierung</h6>
+                </div>
+                <div class="col">
+                    <h4>Anna Schönhoff</h4>
+                    <h6>Konzept & Design</h6>
+                </div>
+                <div class="col">
+                    <h4>Lukas Ulonska</h4>
+                    <h6>Konzept & Design</h6>
+                </div>
+                <div class="col">
+                    <h4>Natur, Maschine, Subjektivitäten</h4>
+                    <h4>HSD - 2022</h4>
+                </div>
+            </div>
         </div>
     </div>
-    <script src="../vendor/bootstrap.min.js"></script>
+    <script src=" ../vendor/bootstrap.bundle.js">
+    </script>
+    <script src="./documentation.js"></script>
 </body>
 
 </html>
+<style>
+    .container {
+        max-width: 100vw;
+        height: 200vh;
+        font: normal normal medium 24px/30px PP Neue Montreal;
+        letter-spacing: 0px;
+    }
+
+    .megaBold {
+        font-weight: 500;
+        font-size: 100px;
+    }
+
+    #logo {
+        position: relative;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    #logoImage {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+    }
+
+    #logoImageFooter {
+        position: relative;
+        filter: invert(1);
+        width: 100%;
+    }
+
+    #footer {
+        padding-top: 400px;
+        padding-bottom: 100px;
+    }
+
+    .img {
+        height: 300px;
+
+    }
+</style>

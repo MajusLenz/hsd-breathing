@@ -203,4 +203,5 @@ function triggerEndState() {
       document.getElementById("endscreen").style.display = "none";
     }
   }, 1000);
+  window.location.href = window.location.href;
 }
