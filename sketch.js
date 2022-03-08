@@ -21,6 +21,15 @@ var lungIsBeingEmptied = false;
 var mouseIsInsideCanvas = false;
 var endStateIsActive = false;
 
+var lifeSpeed = 300; // TODO make slower
+var numberOfLifeShapes = 0;
+var oldLifeShapesBackground;
+var newestLifeShape = null;
+var oldLifeShapes = [];
+var createLifeInterval;
+var gradient;
+
+
 /**
  * P5.js Method
  * call once before start
@@ -35,6 +44,19 @@ function preload() {
     document.getElementById("endscreen").style.display = "unset";
     noLoop();
     triggerEndState();
+  }
+  else {
+    gradient = loadImage('../assets/images/gradient.png');
+
+    jQuery(document).mouseleave(function () {
+      mouseIsInsideCanvas = false;
+    });
+
+    jQuery(document).mouseenter(function () {
+      mouseIsInsideCanvas = true;
+    });
+
+    jQuery(window).resize(setup);
   }
 }
 
@@ -61,6 +83,13 @@ function setup() {
   halfFullDiameter = originalHalfFullDiameter;
   tooEmptyDiameter = originalHalfFullDiameter / 6;
   tooFullDiameter = originalHalfFullDiameter * 2.3;
+
+  oldLifeShapesBackground = createGraphics(windowWidth, windowHeight);
+
+  // create new lifeShape after some seconds
+  createLifeInterval = setInterval(function () {
+    createNewLifeShape();
+  }, lifeSpeed);
 }
 
 /**
@@ -77,6 +106,38 @@ function draw() {
   drawLung();
 }
 
+/** takes mouse input to increase or decrease lung */
+function computeInput() {
+  lungIsBeingFilled = false;
+  lungIsBeingEmptied = false;
+
+  if (mouseIsInsideCanvas) {
+
+    if (mouseX > centerX) {
+      lungIsBeingEmptied = true;
+      emptyLung();
+    }
+    else {
+      lungIsBeingFilled = true;
+      fillLung();
+    }
+  }
+
+  maxBreathingDiameter = halfFullDiameter / 6;
+  currentDiameter = computeCircleDiameter();
+
+  if (currentDiameter <= tooEmptyDiameter) {
+    jQuery("#endscreen").addClass("lung-was-to-empty");
+    sessionStorage.setItem("deathReason", "lung-was-to-empty");
+    triggerEndState();
+  }
+  if (currentDiameter >= tooFullDiameter) {
+    jQuery("#endscreen").addClass("lung-was-to-full");
+    sessionStorage.setItem("deathReason", "lung-was-to-full");
+    triggerEndState();
+  }
+}
+
 /** draws background */
 function drawBackground() {
   background("white");
@@ -88,36 +149,21 @@ function drawBackground() {
   if (lungIsBeingFilled) {
     fill("#1a1a1a");
   }
-
   rect(0, 0, centerX, windowHeight);
 }
 
-/** computes state of the green background and renders it */
+/** computes state of the green background shapes and renders them */
 function drawLife() {
+  // draw old shapes
+  image(oldLifeShapesBackground, 0, 0);
 
-  //drawGradient(30,90,100,100, color("rgba(0,0,255,0.5)"), color("rgba(255,0,0,0.5)"));
+  // draw new lifeShape
+  if (newestLifeShape) {
 
-  // TODO
-}
 
-/** draws rectangle with color gradient */
-function drawGradient(x, y, w, h, color1, color2, axis) {
-  noFill();
+    // TODO
 
-  if (axis === "x") {
-    for (let i = y; i <= y + h; i++) {
-      let inter = map(i, y, y + h, 0, 1);
-      let c = lerpColor(color1, color2, inter);
-      stroke(c);
-      line(x, i, x + w, i);
-    }
-  } else {
-    for (let i = x; i <= x + w; i++) {
-      let inter = map(i, x, x + w, 0, 1);
-      let c = lerpColor(color1, color2, inter);
-      stroke(c);
-      line(i, y, i, y + h);
-    }
+
   }
 }
 
@@ -164,57 +210,50 @@ function computeCircleDiameter(sinusOffset = 0) {
   return result;
 }
 
-/** takes mouse input to increase or decrease lung */
-function computeInput() {
-  lungIsBeingFilled = false;
-  lungIsBeingEmptied = false;
-
-  if (mouseIsInsideCanvas) {
-
-    if (mouseX > centerX) {
-      lungIsBeingEmptied = true;
-      emptyLung();
-    }
-    else {
-      lungIsBeingFilled = true;
-      fillLung();
-    }
-  }
-
-  maxBreathingDiameter = halfFullDiameter / 6;
-  currentDiameter = computeCircleDiameter();
-
-  if (currentDiameter <= tooEmptyDiameter) {
-    jQuery("#endscreen").addClass("lung-was-to-empty");
-    sessionStorage.setItem("deathReason", "lung-was-to-empty");
-    triggerEndState();
-  }
-  if (currentDiameter >= tooFullDiameter) {
-    jQuery("#endscreen").addClass("lung-was-to-full");
-    sessionStorage.setItem("deathReason", "lung-was-to-full");
-    triggerEndState();
-  }
-}
-
 /** makes lung bigger by tiny amount */
 function fillLung() {
-  halfFullDiameter += 0.91;
+  halfFullDiameter += 0.1;
 }
 
 /** makes lung smaller by tiny amount */
 function emptyLung() {
-  halfFullDiameter -= 0.91;
+  halfFullDiameter -= 0.1;
 }
 
-jQuery(document).mouseleave(function () {
-  mouseIsInsideCanvas = false;
-});
 
-jQuery(document).mouseenter(function () {
-  mouseIsInsideCanvas = true;
-});
+/** create data for new green rectangle and add old data to static background */
+function createNewLifeShape() {
+  // add current lifeShape to old lifeShapes
+  if (newestLifeShape !== null) {
+    oldLifeShapesBackground.image(gradient, newestLifeShape.x, newestLifeShape.y, newestLifeShape.w, newestLifeShape.h);
+    numberOfLifeShapes++;
+    newestLifeShape = null;
+  }
 
-jQuery(window).resize(setup);
+  // if lung is healthy add new lifeShape
+  var lungIsHealthy = mouseIsInsideCanvas
+      && currentDiameter > tooEmptyDiameter * 3
+      && currentDiameter < tooFullDiameter / 1.2;
+
+  if (!lungIsHealthy) {
+    return;
+  }
+
+  var rectWidth = windowWidth / 8;
+
+  var x = random([0, rectWidth, rectWidth *2, rectWidth *3, rectWidth *4, rectWidth *5, rectWidth *6, rectWidth *7]);
+
+  var rectHeight = random(100, windowHeight * 0.55);
+
+  var y = Math.random() < 0.5 ? 0 : windowHeight;
+  if (y !== 0) { // rect is on bottom
+    y = y - rectHeight;
+  }
+
+  var maxTransparency = 1;
+
+  newestLifeShape = {x:x, y:y, w:rectWidth, h:rectHeight, maxTransparency:maxTransparency, currentTransparency:0};
+}
 
 
 // ENDSTATE:
