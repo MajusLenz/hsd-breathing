@@ -12,20 +12,26 @@
 
 <body>
     <div class="inputs" style="z-index: 1;">
-        <div class="button-area" id="empty-area">
-            <span class="fake-button" id="empty-button">
-                Empty
-            </span>
-        </div>
         <div class="button-area" id="fill-area">
             <span class="fake-button" id="fill-button">
-                Fill
+                FILL
+            </span>
+        </div>
+        <div class="button-area" id="empty-area">
+            <span class="fake-button" id="empty-button">
+                EMPTY
             </span>
         </div>
     </div>
 
-    <div id="endscreen" style="z-index: 10; display: none;">
-        <span id="countdown">24:00:00</span>
+    <div id="endscreen" style="z-index: 10; display: none;" class="">
+        <div>
+            <span id="countdown"></span>
+        </div>
+        <div class="about-link">
+            <a href="../documentation" class="to-full-link">78% N₂ 21% O₂ 0,04% CO₂ 0,96%</a>
+            <a href="../documentation" class="to-empty-link">78% N₂ 17% O₂ 4% CO₂ 1%</a>
+        </div>
     </div>
 
     <script src="../sketch.js"></script>

@@ -11,13 +11,13 @@
 
 <body>
     <div class="inputs">
-        <form class="button-area" id="empty-area" action="/application">
-            <label for="empty-area" class="text-white h1 p-5 ">TRY</label>
-            <input class="fake-button" id="empty-button" type="submit" value=""></input>
+        <form class="button-area" id="try-area" action="/application">
+            <label for="try-area" class="text-white h1 p-5 ">TRY</label>
+            <input class="fake-button" id="try-button" type="submit" value=""> </input>
         </form>
-        <form class="button-area" id="fill-area" action="/documentation">
-            <label for="fill-button" class="h1 p-5 float-end">ABOUT</label>
-            <input class="fake-button" id="fill-button" type="submit" value=""></input>
+        <form class="button-area" id="about-area" action="/documentation">
+            <label for="about-button" class="h1 p-5 float-end">ABOUT</label>
+            <input class="fake-button" id="about-button" type="submit" value=""> </input>
         </form>
     </div>
     <script src="../vendor/bootstrap.min.js"></script>
@@ -25,12 +25,15 @@
 
 </html>
 <style>
-    #empty-area {
+    #try-area {
         background-color: black;
     }
+    #about-area {
+        right: 0;
+    }
 
-    #fill-button,
-    #empty-button {
+    #about-button,
+    #try-button {
         width: 100%;
         height: 100%;
     }

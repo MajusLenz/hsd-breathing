@@ -10,6 +10,7 @@ var originalHalfFullDiameter;
 var halfFullDiameter;
 var tooEmptyDiameter;
 var tooFullDiameter;
+var currentDiameter
 
 var positionOnSinusCurve = 0;
 
@@ -25,7 +26,16 @@ var endStateIsActive = false;
  * call once before start
  */
 function preload() {
-
+  // Check if Countdown is active
+  if (sessionStorage.getItem("countdown")) {
+    var deathReason = sessionStorage.getItem("deathReason");
+    if (deathReason) {
+      jQuery("#endscreen").addClass(deathReason);
+    }
+    document.getElementById("endscreen").style.display = "unset";
+    noLoop();
+    triggerEndState();
+  }
 }
 
 /**
@@ -49,15 +59,8 @@ function setup() {
   }
 
   halfFullDiameter = originalHalfFullDiameter;
-  tooEmptyDiameter = originalHalfFullDiameter /6;
-  tooFullDiameter = originalHalfFullDiameter *2.3;
-
-  // Check if Countdown is active
-  if (sessionStorage.getItem("countdown")) {
-    document.getElementById("endscreen").style.display = "unset"
-    noLoop();
-    triggerEndState();
-  }
+  tooEmptyDiameter = originalHalfFullDiameter / 6;
+  tooFullDiameter = originalHalfFullDiameter * 2.3;
 }
 
 /**
@@ -70,36 +73,57 @@ function draw() {
   }
   computeInput();
   drawBackground();
+  drawLife();
   drawLung();
 }
 
 /** draws background */
 function drawBackground() {
   background("white");
-  if (lungIsBeingFilled) {
+  if (lungIsBeingEmptied) {
     background("#e1e1e1");
   }
 
   fill("black");
-  if (lungIsBeingEmptied) {
+  if (lungIsBeingFilled) {
     fill("#1a1a1a");
   }
 
   rect(0, 0, centerX, windowHeight);
 }
 
+/** computes state of the green background and renders it */
+function drawLife() {
+
+  //drawGradient(30,90,100,100, color("rgba(0,0,255,0.5)"), color("rgba(255,0,0,0.5)"));
+
+  // TODO
+}
+
+/** draws rectangle with color gradient */
+function drawGradient(x, y, w, h, color1, color2, axis) {
+  noFill();
+
+  if (axis === "x") {
+    for (let i = y; i <= y + h; i++) {
+      let inter = map(i, y, y + h, 0, 1);
+      let c = lerpColor(color1, color2, inter);
+      stroke(c);
+      line(x, i, x + w, i);
+    }
+  } else {
+    for (let i = x; i <= x + w; i++) {
+      let inter = map(i, x, x + w, 0, 1);
+      let c = lerpColor(color1, color2, inter);
+      stroke(c);
+      line(i, y, i, y + h);
+    }
+  }
+}
+
 /** computes state of breathing animation and renders lung */
 function drawLung() {
-  maxBreathingDiameter = halfFullDiameter / 6;
-
-  var currentDiameter = computeCircleDiameter();
-
-  if (currentDiameter <= tooEmptyDiameter) {
-    triggerEndState();
-  }
-  if (currentDiameter >= tooFullDiameter) {
-    triggerEndState();
-  }
+  noStroke();
 
   var transparencyModifier = map(currentDiameter, tooEmptyDiameter, originalHalfFullDiameter, 0, 1, true);
   var saturation = Math.floor( map(currentDiameter, tooEmptyDiameter, tooFullDiameter, 200, 0, true) );
@@ -148,24 +172,38 @@ function computeInput() {
   if (mouseIsInsideCanvas) {
 
     if (mouseX > centerX) {
-      lungIsBeingFilled = true;
-      fillLung();
-    }
-    else {
       lungIsBeingEmptied = true;
       emptyLung();
     }
+    else {
+      lungIsBeingFilled = true;
+      fillLung();
+    }
+  }
+
+  maxBreathingDiameter = halfFullDiameter / 6;
+  currentDiameter = computeCircleDiameter();
+
+  if (currentDiameter <= tooEmptyDiameter) {
+    jQuery("#endscreen").addClass("lung-was-to-empty");
+    sessionStorage.setItem("deathReason", "lung-was-to-empty");
+    triggerEndState();
+  }
+  if (currentDiameter >= tooFullDiameter) {
+    jQuery("#endscreen").addClass("lung-was-to-full");
+    sessionStorage.setItem("deathReason", "lung-was-to-full");
+    triggerEndState();
   }
 }
 
 /** makes lung bigger by tiny amount */
 function fillLung() {
-  halfFullDiameter += 0.1;
+  halfFullDiameter += 0.91;
 }
 
 /** makes lung smaller by tiny amount */
 function emptyLung() {
-  halfFullDiameter -= 0.1;
+  halfFullDiameter -= 0.91;
 }
 
 jQuery(document).mouseleave(function () {
@@ -194,8 +232,8 @@ function triggerEndState() {
     seconds = timeLeft;
   } else {
     // Set the date we're counting down to
-    var countDownDate = new Date(new Date().getTime() + (60 * 1000)).getTime();
-    console.log(timeLeft);
+    var countDownDate = new Date(new Date().getTime() + (24 * 60 * 60 * 1000)).getTime();
+    //console.log(timeLeft);
     var now = new Date().getTime();
 
     // Find the distance between now and the count down date
@@ -214,7 +252,7 @@ function triggerEndState() {
     var hours = Math.floor((distance % (60 * 60 * 24)) / (60 * 60));
     var minutes = Math.floor((distance % (60 * 60)) / (60));
     var seconds = Math.floor((distance % (60)));
-    console.log(seconds)
+    //console.log(seconds)
 
     // Display the result in the element with id="endscreen"
     document.getElementById("countdown").innerHTML = (hours > 9 ? "" : "0") + hours + ":"
@@ -227,5 +265,4 @@ function triggerEndState() {
       window.location.reload();
     }
   }, 1000);
-  window.location.href = window.location.href;
 }
