@@ -2,6 +2,8 @@
  * @author Marius Lenzing
  */
 
+var debugModeIsOn = true;
+
 var centerX;
 var centerY;
 
@@ -21,12 +23,13 @@ var lungIsBeingEmptied = false;
 var mouseIsInsideCanvas = false;
 var endStateIsActive = false;
 
-var lifeSpeed = 300; // TODO make slower
+var lifeSpeed = 5000;
 var numberOfLifeShapes = 0;
 var oldLifeShapesBackground;
 var newestLifeShape = null;
 var oldLifeShapes = [];
 var createLifeInterval;
+var lifeCreationTimestamp;
 var gradient;
 
 
@@ -57,6 +60,11 @@ function preload() {
     });
 
     jQuery(window).resize(setup);
+
+    // create new lifeShape after some seconds
+    createLifeInterval = setInterval(function () {
+      createNewLifeShape();
+    }, lifeSpeed);
   }
 }
 
@@ -85,11 +93,6 @@ function setup() {
   tooFullDiameter = originalHalfFullDiameter * 2.3;
 
   oldLifeShapesBackground = createGraphics(windowWidth, windowHeight);
-
-  // create new lifeShape after some seconds
-  createLifeInterval = setInterval(function () {
-    createNewLifeShape();
-  }, lifeSpeed);
 }
 
 /**
@@ -104,6 +107,12 @@ function draw() {
   drawBackground();
   drawLife();
   drawLung();
+
+  if (debugModeIsOn) {
+    textSize(32);
+    fill("red")
+    text(frameRate(), 10, 30);
+  }
 }
 
 /** takes mouse input to increase or decrease lung */
@@ -142,29 +151,48 @@ function computeInput() {
 function drawBackground() {
   background("white");
   if (lungIsBeingEmptied) {
-    background("#e1e1e1");
+    background(color(225, 225, 225));
   }
 
   fill("black");
   if (lungIsBeingFilled) {
-    fill("#1a1a1a");
+    fill(color(26, 26, 26));
   }
   rect(0, 0, centerX, windowHeight);
 }
 
 /** computes state of the green background shapes and renders them */
 function drawLife() {
-  // draw old shapes
-  image(oldLifeShapesBackground, 0, 0);
-
   // draw new lifeShape
   if (newestLifeShape) {
+    image(gradient, newestLifeShape.x, newestLifeShape.y, newestLifeShape.w, newestLifeShape.h);
 
+    var lifeShapeYoungestAge = lifeCreationTimestamp;
+    var lifeShapeOldestAge = lifeCreationTimestamp + lifeSpeed;
+    var lifeShapeCurrentAge = + new Date(); // now
+    var transparency = map(lifeShapeCurrentAge, lifeShapeYoungestAge, lifeShapeOldestAge, 255, 0, true);
 
-    // TODO
+    var overlayColor;
+    if (newestLifeShape.x >= centerX) {
+      overlayColor = "white";
+      if (lungIsBeingEmptied) {
+        overlayColor = color(225, 225, 225);
+      }
+    }
+    else {
+      overlayColor = "black";
+      if (lungIsBeingFilled) {
+        overlayColor = color(26, 26, 26);
+      }
+    }
 
-
+    var overlayColorWithTransparency = color(red(overlayColor), green(overlayColor), blue(overlayColor), transparency);
+    fill(overlayColorWithTransparency);
+    rect(newestLifeShape.x, newestLifeShape.y -1, newestLifeShape.w, newestLifeShape.h +2);
   }
+
+  // draw old lifeShapes
+  image(oldLifeShapesBackground, 0, 0);
 }
 
 /** computes state of breathing animation and renders lung */
@@ -223,6 +251,8 @@ function emptyLung() {
 
 /** create data for new green rectangle and add old data to static background */
 function createNewLifeShape() {
+  lifeCreationTimestamp = + new Date(); // now
+
   // add current lifeShape to old lifeShapes
   if (newestLifeShape !== null) {
     oldLifeShapesBackground.image(gradient, newestLifeShape.x, newestLifeShape.y, newestLifeShape.w, newestLifeShape.h);
@@ -243,16 +273,15 @@ function createNewLifeShape() {
 
   var x = random([0, rectWidth, rectWidth *2, rectWidth *3, rectWidth *4, rectWidth *5, rectWidth *6, rectWidth *7]);
 
-  var rectHeight = random(100, windowHeight * 0.55);
+  var maxHeightModifier = 0.1 + numberOfLifeShapes * 0.02;
+  var rectHeight = random(windowHeight * 0.1, windowHeight * maxHeightModifier);
 
   var y = Math.random() < 0.5 ? 0 : windowHeight;
   if (y !== 0) { // rect is on bottom
     y = y - rectHeight;
   }
 
-  var maxTransparency = 1;
-
-  newestLifeShape = {x:x, y:y, w:rectWidth, h:rectHeight, maxTransparency:maxTransparency, currentTransparency:0};
+  newestLifeShape = {x:x, y:y, w:rectWidth, h:rectHeight};
 }
 
 

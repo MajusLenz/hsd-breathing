@@ -11,6 +11,7 @@
 @font-face {
   font-family: 'digital-7-mono';
   src:  url('assets/fonts/digital-7.mono.woff') format('woff');
+  /* TODO richtige monospaced font einbauen */
 }
 
 html, body {
