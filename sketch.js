@@ -39,8 +39,8 @@ var gradient;
  */
 function preload() {
   // Check if Countdown is active
-  if (sessionStorage.getItem("countdown")) {
-    var deathReason = sessionStorage.getItem("deathReason");
+  if (localStorage.getItem("countdown")) {
+    var deathReason = localStorage.getItem("deathReason");
     if (deathReason) {
       jQuery("#endscreen").addClass(deathReason);
     }
@@ -137,12 +137,12 @@ function computeInput() {
 
   if (currentDiameter <= tooEmptyDiameter) {
     jQuery("#endscreen").addClass("lung-was-to-empty");
-    sessionStorage.setItem("deathReason", "lung-was-to-empty");
+    localStorage.setItem("deathReason", "lung-was-to-empty");
     triggerEndState();
   }
   if (currentDiameter >= tooFullDiameter) {
     jQuery("#endscreen").addClass("lung-was-to-full");
-    sessionStorage.setItem("deathReason", "lung-was-to-full");
+    localStorage.setItem("deathReason", "lung-was-to-full");
     triggerEndState();
   }
 }
@@ -188,7 +188,7 @@ function drawLife() {
 
     var overlayColorWithTransparency = color(red(overlayColor), green(overlayColor), blue(overlayColor), transparency);
     fill(overlayColorWithTransparency);
-    rect(newestLifeShape.x, newestLifeShape.y -1, newestLifeShape.w, newestLifeShape.h +2);
+    rect(newestLifeShape.x, newestLifeShape.y - 1, newestLifeShape.w, newestLifeShape.h + 2);
   }
 
   // draw old lifeShapes
@@ -245,7 +245,7 @@ function fillLung() {
 
 /** makes lung smaller by tiny amount */
 function emptyLung() {
-  halfFullDiameter -= 0.1;
+  halfFullDiameter -= 0.9;
 }
 
 
@@ -262,8 +262,8 @@ function createNewLifeShape() {
 
   // if lung is healthy add new lifeShape
   var lungIsHealthy = mouseIsInsideCanvas
-      && currentDiameter > tooEmptyDiameter * 3
-      && currentDiameter < tooFullDiameter / 1.2;
+    && currentDiameter > tooEmptyDiameter * 3
+    && currentDiameter < tooFullDiameter / 1.2;
 
   if (!lungIsHealthy) {
     return;
@@ -271,7 +271,7 @@ function createNewLifeShape() {
 
   var rectWidth = windowWidth / 8;
 
-  var x = random([0, rectWidth, rectWidth *2, rectWidth *3, rectWidth *4, rectWidth *5, rectWidth *6, rectWidth *7]);
+  var x = random([0, rectWidth, rectWidth * 2, rectWidth * 3, rectWidth * 4, rectWidth * 5, rectWidth * 6, rectWidth * 7]);
 
   var maxHeightModifier = 0.1 + numberOfLifeShapes * 0.02;
   var rectHeight = random(windowHeight * 0.1, windowHeight * maxHeightModifier);
@@ -281,7 +281,7 @@ function createNewLifeShape() {
     y = y - rectHeight;
   }
 
-  newestLifeShape = {x:x, y:y, w:rectWidth, h:rectHeight};
+  newestLifeShape = { x: x, y: y, w: rectWidth, h: rectHeight };
 }
 
 
@@ -295,7 +295,7 @@ function triggerEndState() {
 
   document.getElementById("endscreen").style.display = "flex";
 
-  var timeLeft = sessionStorage.getItem("countdown");
+  var timeLeft = localStorage.getItem("countdown");
   if (timeLeft > 0) {
     seconds = timeLeft;
   } else {
@@ -306,15 +306,15 @@ function triggerEndState() {
 
     // Find the distance between now and the count down date
     var seconds = Math.floor((countDownDate - now) / 1000);
-    sessionStorage.setItem("countdown", seconds);
+    localStorage.setItem("countdown", seconds);
   }
 
   // Update the count down every 1 second
   var x = setInterval(function () {
     // Get today's date and time
 
-    let distance = sessionStorage.getItem("countdown") - 1;
-    sessionStorage.setItem("countdown", distance);
+    let distance = localStorage.getItem("countdown") - 1;
+    localStorage.setItem("countdown", distance);
 
     // Time calculations for days, hours, minutes and seconds
     var hours = Math.floor((distance % (60 * 60 * 24)) / (60 * 60));
@@ -329,7 +329,7 @@ function triggerEndState() {
     // If the count down is finished, write some text
     if (distance <= 0) {
       clearInterval(x);
-      sessionStorage.removeItem("countdown");
+      localStorage.removeItem("countdown");
       window.location.reload();
     }
   }, 1000);
