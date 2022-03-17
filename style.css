@@ -8,6 +8,11 @@
   src:  url('assets/fonts/PPNeueMontreal/PPNeueMontreal-Regular.woff2') format('woff2'),
   url('assets/fonts/PPNeueMontreal/PPNeueMontreal-Regular.woff') format('woff');
 }
+@font-face {
+  font-family: 'digital-7-mono';
+  src:  url('assets/fonts/digital-7.mono.woff') format('woff');
+  /* TODO richtige monospaced font einbauen */
+}
 
 html, body {
   margin: 0;
@@ -29,10 +34,9 @@ canvas {
   height: 100%;
   cursor: default;
 }
+/* #empty-area {
 
-#empty-area {
-
-}
+} */
 #empty-area:hover .fake-button {
   /*text-decoration: underline;*/
   /*text-decoration-color: white;*/
@@ -60,12 +64,12 @@ canvas {
   font-size: 25pt;
 }
 
-#empty-button {
+#fill-button {
   color: white;
   float: left;
   margin-left: 40px;
 }
-#fill-button {
+#empty-button {
   color: black;
   float: right;
   margin-right: 40px;
@@ -79,13 +83,58 @@ canvas {
   justify-content: center;
   align-items: center;
 }
-#countdown{
-  position: relative;
-  font-size: 100pt;
-  color: white;
+#endscreen.lung-was-to-full {
+  background-color: black;
+}
+#endscreen.lung-was-to-empty {
+  background-color: white;
 }
 
-#absolute{
+#countdown {
+  position: relative;
+  font-size: 20vw;
+  font-family: digital-7-mono, Monospaced, monospace;
+}
+.lung-was-to-full #countdown {
+  color: white;
+}
+.lung-was-to-empty #countdown {
+  color: black;
+}
+
+#endscreen .about-link {
+  position: absolute;
+  bottom: 35px;
+  right: 43px;
+}
+#endscreen .about-link a {
+  font-size: 15pt;
+  text-decoration: none;
+  display: none;
+}
+#endscreen .about-link .to-full-link {
+  color: white;
+}
+#endscreen .about-link .to-empty-link {
+  color: black;
+}
+#endscreen.lung-was-to-full .about-link .to-full-link {
+  display: inline;
+}
+#endscreen.lung-was-to-empty .about-link .to-empty-link {
+  display: inline;
+}
+
+
+#absolute {
   position: absolute;
   bottom: 0;
+}
+
+.blur {
+  -webkit-filter: blur(6px);
+  -moz-filter: blur(6px);
+  -o-filter: blur(6px);
+  -ms-filter: blur(6px);
+  filter: blur(6px);
 }
