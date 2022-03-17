@@ -245,7 +245,7 @@ function fillLung() {
 
 /** makes lung smaller by tiny amount */
 function emptyLung() {
-  halfFullDiameter -= 0.9;
+  halfFullDiameter -= 0.1;
 }
 
 
