@@ -11,27 +11,28 @@
 
 <body>
     <div class="inputs">
-        <form class="button-area" id="empty-area" action="/application">
-            <label for="empty-area" class="text-white h1 p-5 ">TRY</label>
-            <input class="fake-button" id="empty-button" type="submit" value=""></input>
-        </form>
-        <form class="button-area" id="fill-area" action="/documentation">
-            <label for="fill-button" class="h1 p-5 float-end">ABOUT</label>
-            <input class="fake-button" id="fill-button" type="submit" value=""></input>
-        </form>
+        <a class="button-area" id="empty-area" href="/application">
+            <span class="fake-button" id="empty-button">
+                TRY
+            </span>
+        </a>
+        <a class="button-area" id="fill-area" href="/documentation">
+            <span class="fake-button" id="fill-button">
+                ABOUT
+            </span>
+        </a>
     </div>
-    <script src="../vendor/bootstrap.min.js"></script>
+    <script src="./vendor/bootstrap.bundle.js"></script>
 </body>
 
 </html>
-<style>
+<style scoped>
     #empty-area {
         background-color: black;
     }
 
-    #fill-button,
-    #empty-button {
-        width: 100%;
-        height: 100%;
+    .fake-button {
+        width: 20%;
+        text-align: center;
     }
 </style>

@@ -49,8 +49,8 @@ function setup() {
   }
 
   halfFullDiameter = originalHalfFullDiameter;
-  tooEmptyDiameter = originalHalfFullDiameter /6;
-  tooFullDiameter = originalHalfFullDiameter *2.3;
+  tooEmptyDiameter = originalHalfFullDiameter / 6;
+  tooFullDiameter = originalHalfFullDiameter * 2.3;
 
   // Check if Countdown is active
   if (sessionStorage.getItem("countdown")) {
@@ -102,30 +102,30 @@ function drawLung() {
   }
 
   var transparencyModifier = map(currentDiameter, tooEmptyDiameter, originalHalfFullDiameter, 0, 1, true);
-  var saturation = Math.floor( map(currentDiameter, tooEmptyDiameter, tooFullDiameter, 200, 0, true) );
+  var saturation = Math.floor(map(currentDiameter, tooEmptyDiameter, tooFullDiameter, 200, 0, true));
   var breathingSpeed = map(currentDiameter, originalHalfFullDiameter, tooFullDiameter, 1, 7, true);
 
   // draw main circle
   var transparency = 1 * transparencyModifier;
-  fill("rgba(" + saturation +"," + saturation + ",255," + transparency + ")");
+  fill("rgba(" + saturation + "," + saturation + ",255," + transparency + ")");
   circle(centerX, centerY, currentDiameter);
 
   // draw outer circles
   transparency = 0.5 * transparencyModifier;
-  fill("rgba(" + saturation +"," + saturation + ",255," + transparency + ")");
-  circle(centerX, centerY, computeCircleDiameter(-0.2) *1.1);
+  fill("rgba(" + saturation + "," + saturation + ",255," + transparency + ")");
+  circle(centerX, centerY, computeCircleDiameter(-0.2) * 1.1);
 
   transparency = 0.45 * transparencyModifier;
-  fill("rgba(" + saturation +"," + saturation + ",255," + transparency + ")");
-  circle(centerX, centerY, computeCircleDiameter(-0.4) *1.2);
+  fill("rgba(" + saturation + "," + saturation + ",255," + transparency + ")");
+  circle(centerX, centerY, computeCircleDiameter(-0.4) * 1.2);
 
   transparency = 0.35 * transparencyModifier;
-  fill("rgba(" + saturation +"," + saturation + ",255," + transparency + ")");
-  circle(centerX, centerY, computeCircleDiameter(-0.6) *1.3);
+  fill("rgba(" + saturation + "," + saturation + ",255," + transparency + ")");
+  circle(centerX, centerY, computeCircleDiameter(-0.6) * 1.3);
 
   transparency = 0.3 * transparencyModifier;
-  fill("rgba(" + saturation +"," + saturation + ",255," + transparency + ")");
-  circle(centerX, centerY, computeCircleDiameter(-0.8) *1.4);
+  fill("rgba(" + saturation + "," + saturation + ",255," + transparency + ")");
+  circle(centerX, centerY, computeCircleDiameter(-0.8) * 1.4);
 
   positionOnSinusCurve += 0.02 * breathingSpeed;
 }
@@ -227,5 +227,4 @@ function triggerEndState() {
       window.location.reload();
     }
   }, 1000);
-  window.location.href = window.location.href;
 }

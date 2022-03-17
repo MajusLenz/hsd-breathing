@@ -36,18 +36,20 @@ canvas {
 #empty-area:hover .fake-button {
   /*text-decoration: underline;*/
   /*text-decoration-color: white;*/
-  /*text-decoration-thickness: 2px;*/
+  text-decoration-thickness: 2px;
   font-family: PPNeueMontreal-Medium, Arial, sans-serif;
+  letter-spacing: 6px;
 }
 
 #fill-area {
   right: 0;
 }
 #fill-area:hover .fake-button {
-  /*text-decoration: underline;*/
+  /* text-decoration: underline; */
   /*text-decoration-color: black;*/
-  /*text-decoration-thickness: 2px;*/
+  /* text-decoration-thickness: 2px; */
   font-family: PPNeueMontreal-Medium, Arial, sans-serif;
+  letter-spacing: 6px;
 }
 
 .fake-button {

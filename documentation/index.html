@@ -12,18 +12,18 @@
 
 <body>
     <div class="container">
-        <div class="d-flex justify-content-center flex-column">
+        <div class="d-flex flex-column">
 
             <a id="logo" href="../application" class="row">
                 <img src="./Logo.PNG" id="logoImage" class="pt-auto">
             </a>
-            <div class="row my-5 bg-black p-5 text-white h1 display-3 " id="introText">
+            <div class="row my-5 bg-black p-5 text-white h1 display-3 col-8 mx-auto" id="introText">
                 Copy Text Intro These/Grundidee- Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
                 nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
                 accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
                 ipsum dolor sit amet. Lorem ipsum
             </div>
-            <div class="row my-5">
+            <div class="row my-5 col-8 mx-auto">
                 <div class="row">
                     <h1 class="display-2">Headline H1 - Konzept & Entwürfe</h1>
                     <h1 class="display-2">(Zusammenführung verschiedene Ansätze)</h1>
@@ -49,7 +49,7 @@
             <div class="row my-5">
                 <h1 class="text-center megaBold">78% N₂ 17% O₂ 4% CO₂ 1%</h1>
             </div>
-            <div class="row bg-black my-5 text-white p-5">
+            <div class="row bg-black my-5 text-white p-5 col-8 mx-auto">
                 <h1 class="display-2 pb-3">Headline H1 - Inspiration/Ideen</h1>
                 <h2 class="display-4">Copy Text - Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
                     nonumy eirmod
@@ -88,29 +88,36 @@
             <div class="row my-5">
                 <h1 class="text-center megaBold">78% N₂ 21% O₂ 0,04% CO₂ 0,96%</h1>
             </div>
-            <div class="row bg-black text-white mt-5" id="footer">
+            <div class="row bg-black text-white mt-5 " id="footer">
                 <div class="col-4">
-                    <img src="./Logo.PNG" id="logoImageFooter">
+                    <div class="col">
+                        <img src="./Logo.PNG" id="logoImageFooter">
+                    </div>
+
+                    <div class="col pt-5">
+                        <h4>Natur, Maschine, Subjektivitäten</h4>
+                        <h4>HSD - 2022</h4>
+                    </div>
                 </div>
-                <div class="col">
-                    <h4>David Joas</h4>
-                    <h6>Konzept & Programmierung</h3>
-                </div>
-                <div class="col">
-                    <h4>Marius Lenzing</h4>
-                    <h6>Konzept & Programmierung</h6>
-                </div>
-                <div class="col">
-                    <h4>Anna Schönhoff</h4>
-                    <h6>Konzept & Design</h6>
-                </div>
-                <div class="col">
-                    <h4>Lukas Ulonska</h4>
-                    <h6>Konzept & Design</h6>
-                </div>
-                <div class="col">
-                    <h4>Natur, Maschine, Subjektivitäten</h4>
-                    <h4>HSD - 2022</h4>
+                <div class="col"></div>
+                <div class="col-7 row">
+
+                    <div class="col">
+                        <h4>David Joas</h4>
+                        <h6>Konzept & Programmierung</h3>
+                    </div>
+                    <div class="col">
+                        <h4>Marius Lenzing</h4>
+                        <h6>Konzept & Programmierung</h6>
+                    </div>
+                    <div class="col">
+                        <h4>Anna Schönhoff</h4>
+                        <h6>Konzept & Design</h6>
+                    </div>
+                    <div class="col">
+                        <h4>Lukas Ulonska</h4>
+                        <h6>Konzept & Design</h6>
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,11 +129,24 @@
 
 </html>
 <style>
+    body {
+        overflow-x: hidden;
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
     .container {
         max-width: 100vw;
         height: 200vh;
         font: normal normal medium 24px/30px PP Neue Montreal;
         letter-spacing: 0px;
+
     }
 
     .megaBold {
