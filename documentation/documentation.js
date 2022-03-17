@@ -6,7 +6,7 @@ window.addEventListener('load', function () {
     window.addEventListener('scroll', function () {
         // normalize scroll position as percentage
         let scrolled = (window.innerHeight - window.scrollY) / (docHeight - window.innerHeight);
-        console.log(scrolled)
+
         if (scrolled < 0.2) {
             scrolled = 0.2;
         } else {

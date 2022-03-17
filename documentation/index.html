@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="row my-5 mx-auto breathing">
-                <h1 data-splitting>78% N₂ 17% O₂ 4% CO₂ 1%</h1>
+                <h1 data-splitting>78% N<sub>2</sub> 17% O<sub>2</sub> 4% CO<sub>2</sub> 1%</h1>
             </div>
             <div class="row bg-black my-5 text-white p-5 col col-sm-8 mx-auto">
                 <h1 class="display-2 pb-3">Headline H1 - Inspiration/Ideen</h1>
@@ -92,8 +92,8 @@
                 </div>
             </div>
 
-            <div class="row my-5 mx-auto">
-                <h1 data-splitting>78% N₂ 21% O₂ 0,04% CO₂ 0,96%</h1>
+            <div class="row my-5 mx-auto breathing">
+                <h1 data-splitting>78% N<sub>2</sub> 21% O<sub>2</sub> 0,04% CO<sub>2</sub> 0,96%</h1>
             </div>
             <div class="row bg-black text-white mt-5" id="footer">
                 <div class="col-4">
@@ -188,7 +188,6 @@
 
     .img {
         height: 300px;
-
     }
 
     /*
@@ -197,14 +196,14 @@
 */
     @font-face {
         font-family: "AzeretMono-VariableFont_wght";
-        src: url('assets/AzeretMono-VariableFont_wght.ttf') format('truetype');
+        src: url('/assets/fonts/AzeretMono-VariableFont_wght.ttf') format('truetype');
     }
 
     * {
         box-sizing: border-box;
     }
 
-    breathing {
+    .breathing {
         font-family: "AzeretMono-VariableFont_wght";
         display: flex;
         align-items: center;
@@ -212,40 +211,38 @@
         text-align: center;
         min-height: 80px;
         background-color: white;
+        white-space: nowrap;
     }
 
-    h1 {
-        font-weight: 100;
-        font-weight: 100;
-        font-size: 6vw;
-        line-height: 6vw;
+    .breathing h1 {
+        font-size: 2em;
+        line-height: 7vw;
         text-decoration: none;
-        font-weight: 100;
+        font-variation-settings: 'wght'100;
     }
 
-    h1 .char {
+    .breathing h1 .char {
         --delay: calc((var(--char-index) + 1) * 220ms);
+        /* transition: font-weight 220ms ease-in-out; */
         animation: breathe 6500ms infinite both;
         animation-delay: var(--delay);
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
-        -webkit-animation-timing-function: linear;
-        animation-timing-function: linear;
+
     }
+
 
     @keyframes breathe {
         0% {
-            font-weight: 100;
+            font-variation-settings: 'wght'100;
             font-size: 6vw;
         }
 
         60% {
-            font-weight: 700;
+            font-variation-settings: 'wght'700;
             font-size: 6.5vw;
         }
 
         100% {
-            font-weight: 100;
+            font-variation-settings: 'wght'100;
             font-size: 6vw;
         }
     }
