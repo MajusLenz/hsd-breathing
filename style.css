@@ -9,9 +9,8 @@
   url('assets/fonts/PPNeueMontreal/PPNeueMontreal-Regular.woff') format('woff');
 }
 @font-face {
-  font-family: 'digital-7-mono';
-  src:  url('assets/fonts/digital-7.mono.woff') format('woff');
-  /* TODO richtige monospaced font einbauen */
+  font-family: 'AzeretMono-Regular';
+  src:  url('assets/fonts/AzeretMono-Regular.woff') format('woff');
 }
 
 html, body {
@@ -92,8 +91,8 @@ canvas {
 
 #countdown {
   position: relative;
-  font-size: 20vw;
-  font-family: digital-7-mono, Monospaced, monospace;
+  font-size: 16vw;
+  font-family: AzeretMono-Regular, monospace;
 }
 .lung-was-to-full #countdown {
   color: white;
