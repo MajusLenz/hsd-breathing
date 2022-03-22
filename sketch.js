@@ -206,13 +206,13 @@ function drawLung() {
   var halfFullDiameterColor = color(151, 227, 255);
   var fullDiameterColor = color(0, 28, 61);
   var circleColorRed = Math.floor(
-      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter, red(halfFullDiameterColor), red(fullDiameterColor), true)
+      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter * 0.88, red(halfFullDiameterColor), red(fullDiameterColor), true)
   );
   var circleColorGreen = Math.floor(
-      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter, green(halfFullDiameterColor), green(fullDiameterColor), true)
+      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter * 0.88, green(halfFullDiameterColor), green(fullDiameterColor), true)
   );
   var circleColorBlue = Math.floor(
-      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter, blue(halfFullDiameterColor), blue(fullDiameterColor), true)
+      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter * 0.88, blue(halfFullDiameterColor), blue(fullDiameterColor), true)
   );
 
   // draw main circle:
