@@ -45,7 +45,7 @@ canvas {
   letter-spacing: 6px;
 }
 
-#fill-area {
+#empty-area {
   right: 0;
 }
 #fill-area:hover .fake-button {
