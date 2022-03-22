@@ -34,9 +34,9 @@ canvas {
   height: 100%;
   cursor: default;
 }
-/* #empty-area {
-
-} */
+#empty-area {
+  right: 0;
+}
 #empty-area:hover .fake-button {
   /*text-decoration: underline;*/
   /*text-decoration-color: white;*/
@@ -45,8 +45,8 @@ canvas {
   letter-spacing: 6px;
 }
 
-#empty-area {
-  right: 0;
+#fill-area {
+
 }
 #fill-area:hover .fake-button {
   /* text-decoration: underline; */
