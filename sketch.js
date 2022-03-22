@@ -2,7 +2,7 @@
  * @author Marius Lenzing
  */
 
-var debugModeIsOn = true;
+var debugModeIsOn = false;
 
 var centerX;
 var centerY;
@@ -200,29 +200,41 @@ function drawLung() {
   noStroke();
 
   var transparencyModifier = map(currentDiameter, tooEmptyDiameter, originalHalfFullDiameter, 0, 1, true);
-  var saturation = Math.floor(map(currentDiameter, tooEmptyDiameter, tooFullDiameter, 200, 0, true));
+
   var breathingSpeed = map(currentDiameter, originalHalfFullDiameter, tooFullDiameter, 1, 7, true);
 
-  // draw main circle
+  var halfFullDiameterColor = color(151, 227, 255);
+  var fullDiameterColor = color(0, 28, 61);
+  var circleColorRed = Math.floor(
+      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter, red(halfFullDiameterColor), red(fullDiameterColor), true)
+  );
+  var circleColorGreen = Math.floor(
+      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter, green(halfFullDiameterColor), green(fullDiameterColor), true)
+  );
+  var circleColorBlue = Math.floor(
+      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter, blue(halfFullDiameterColor), blue(fullDiameterColor), true)
+  );
+
+  // draw main circle:
   var transparency = 1 * transparencyModifier;
-  fill("rgba(" + saturation + "," + saturation + ",255," + transparency + ")");
+  fill("rgba(" + circleColorRed + "," + circleColorGreen + "," + circleColorBlue + "," + transparency + ")");
   circle(centerX, centerY, currentDiameter);
 
-  // draw outer circles
+  // draw outer circles:
   transparency = 0.5 * transparencyModifier;
-  fill("rgba(" + saturation + "," + saturation + ",255," + transparency + ")");
+  fill("rgba(" + circleColorRed + "," + circleColorGreen + "," + circleColorBlue + "," + transparency + ")");
   circle(centerX, centerY, computeCircleDiameter(-0.2) * 1.1);
 
   transparency = 0.45 * transparencyModifier;
-  fill("rgba(" + saturation + "," + saturation + ",255," + transparency + ")");
+  fill("rgba(" + circleColorRed + "," + circleColorGreen + "," + circleColorBlue + "," + transparency + ")");
   circle(centerX, centerY, computeCircleDiameter(-0.4) * 1.2);
 
   transparency = 0.35 * transparencyModifier;
-  fill("rgba(" + saturation + "," + saturation + ",255," + transparency + ")");
+  fill("rgba(" + circleColorRed + "," + circleColorGreen + "," + circleColorBlue + "," + transparency + ")");
   circle(centerX, centerY, computeCircleDiameter(-0.6) * 1.3);
 
   transparency = 0.3 * transparencyModifier;
-  fill("rgba(" + saturation + "," + saturation + ",255," + transparency + ")");
+  fill("rgba(" + circleColorRed + "," + circleColorGreen + "," + circleColorBlue + "," + transparency + ")");
   circle(centerX, centerY, computeCircleDiameter(-0.8) * 1.4);
 
   positionOnSinusCurve += 0.02 * breathingSpeed;
