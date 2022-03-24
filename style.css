@@ -25,6 +25,15 @@ html, body {
 canvas {
   display: block;
 }
+canvas.explosion-state {
+  display: block!important;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
 
 .button-area {
   display: inline-block;
@@ -124,6 +133,18 @@ canvas {
   display: inline;
 }
 
+#about-link-copy {
+  position: absolute;
+  z-index: 2000;
+  display: none;
+  bottom: 35px;
+  right: 43px;
+}
+#about-link-copy a {
+  font-size: 15pt;
+  text-decoration: none;
+  color: white;
+}
 
 #absolute {
   position: absolute;

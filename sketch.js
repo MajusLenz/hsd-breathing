@@ -4,6 +4,7 @@
 
 var debugModeIsOn = false;
 
+var theCanvas;
 var centerX;
 var centerY;
 
@@ -22,6 +23,10 @@ var lungIsBeingFilled = false;
 var lungIsBeingEmptied = false;
 var mouseIsInsideCanvas = false;
 var endStateIsActive = false;
+
+var lungIsExploding = false;
+var particles = [];
+var explosionCanvas;
 
 var lifeSpeed = 5000;
 var numberOfLifeShapes = 0;
@@ -73,7 +78,7 @@ function preload() {
  * call once on start
  */
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  theCanvas = createCanvas(windowWidth, windowHeight);
   noStroke();
 
   centerX = windowWidth / 2;
@@ -100,18 +105,33 @@ function setup() {
  * call once every frame
  */
 function draw() {
-  if (endStateIsActive) {
-    return;
+  if (lungIsExploding) {
+    drawExplosion();
   }
-  computeInput();
-  drawBackground();
-  drawLife();
-  drawLung();
 
-  if (debugModeIsOn) {
-    textSize(32);
-    fill("red")
-    text(frameRate(), 10, 30);
+  if (!endStateIsActive) {
+    computeInput();
+    drawBackground();
+    drawLife();
+    drawLung();
+
+    if (debugModeIsOn) {
+      textSize(32);
+      fill("red")
+      text(frameRate(), 10, 30);
+    }
+  }
+}
+
+/** draws the motion of the particles of the explosion-endState */
+function drawExplosion() {
+  clear();
+
+  if(particles.length > 0) {
+    for(var i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].display();
+    }
   }
 }
 
@@ -136,14 +156,10 @@ function computeInput() {
   currentDiameter = computeCircleDiameter();
 
   if (currentDiameter <= tooEmptyDiameter) {
-    jQuery("#endscreen").addClass("lung-was-to-empty");
-    localStorage.setItem("deathReason", "lung-was-to-empty");
-    triggerEndState();
+    lungStarve();
   }
   if (currentDiameter >= tooFullDiameter) {
-    jQuery("#endscreen").addClass("lung-was-to-full");
-    localStorage.setItem("deathReason", "lung-was-to-full");
-    triggerEndState();
+    lungExplode();
   }
 }
 
@@ -252,7 +268,7 @@ function computeCircleDiameter(sinusOffset = 0) {
 
 /** makes lung bigger by tiny amount */
 function fillLung() {
-  halfFullDiameter += 0.1;
+  halfFullDiameter += 3.1;
 }
 
 /** makes lung smaller by tiny amount */
@@ -345,4 +361,95 @@ function triggerEndState() {
       window.location.reload();
     }
   }, 1000);
+}
+
+/** starts starving-endState */
+function lungStarve() {
+  jQuery("#endscreen").addClass("lung-was-to-empty");
+  localStorage.setItem("deathReason", "lung-was-to-empty");
+
+  triggerEndState();
+}
+
+/** starts explosion-endState */
+function lungExplode() {
+  jQuery("#endscreen").addClass("lung-was-to-full");
+  jQuery(".about-link").css("display", "none");
+  jQuery("#about-link-copy").css("display", "block");
+
+  localStorage.setItem("deathReason", "lung-was-to-full");
+  triggerEndState();
+  lungIsExploding = true;
+  theCanvas.canvas.classList.add("explosion-state");
+
+  var i;
+  for (i = 0; i < 200; i++) {
+    particles[i] = new Particle(centerX, centerY, random(3,40));
+  }
+
+  setInterval(function() {
+    if(i <= 230) {
+      particles[i] = new Particle(centerX, centerY, random(3, 30));
+      i++;
+    }
+  }, 1);
+}
+
+
+/** explosion particle */
+class Particle {
+
+  constructor(x, y, r) {
+    this.pos   = createVector(x, y);
+    this.acc   = createVector(0, 0);
+    this.r     = r ? r : 48;
+    this.halfr = r / 2;
+
+    var velX, velY, velIsToSlow;
+    do{
+      velX = random(-10, 10);
+      velY = random(-10, 10);
+      velIsToSlow = (velX > -0.4 && velX < 0.4) && (velY > -0.4 && velY < 0.4);
+    } while (velIsToSlow);
+    this.vel   = createVector(velX, velY);
+  }
+
+  applyForce(force) {
+    this.acc.add(force);
+  }
+
+  update() {
+    this.vel.add(this.acc);
+    this.pos.add(this.vel);
+    this.acc.set(0, 0);
+  }
+
+  display() {
+    noStroke();
+    fill(color(0, 28, 61));
+    ellipse(this.pos.x, this.pos.y, this.r, this.r);
+  }
+
+  edges() {
+    if(this.pos.y > (height - this.halfr)) {
+      this.vel.y *= -1;
+      this.pos.y = (height - this.halfr);
+    }
+
+    if(this.pos.y < 0 + this.halfr) {
+      this.vel.y *= -1;
+      this.pos.y = 0 + this.halfr;
+    }
+
+    if(this.pos.x > (width - this.halfr)) {
+      this.vel.x *= -1;
+      this.pos.x = (width - this.halfr);
+    }
+
+    if(this.pos.x < this.halfr) {
+      this.vel.x /= -1;
+      this.pos.x = this.halfr;
+    }
+  }
+
 }
