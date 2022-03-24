@@ -127,8 +127,8 @@ function draw() {
 function drawExplosion() {
   clear();
 
-  if(particles.length > 0) {
-    for(var i = 0; i < particles.length; i++) {
+  if (particles.length > 0) {
+    for (var i = 0; i < particles.length; i++) {
       particles[i].update();
       particles[i].display();
     }
@@ -222,13 +222,13 @@ function drawLung() {
   var halfFullDiameterColor = color(151, 227, 255);
   var fullDiameterColor = color(0, 28, 61);
   var circleColorRed = Math.floor(
-      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter * 0.88, red(halfFullDiameterColor), red(fullDiameterColor), true)
+    map(currentDiameter, originalHalfFullDiameter, tooFullDiameter * 0.88, red(halfFullDiameterColor), red(fullDiameterColor), true)
   );
   var circleColorGreen = Math.floor(
-      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter * 0.88, green(halfFullDiameterColor), green(fullDiameterColor), true)
+    map(currentDiameter, originalHalfFullDiameter, tooFullDiameter * 0.88, green(halfFullDiameterColor), green(fullDiameterColor), true)
   );
   var circleColorBlue = Math.floor(
-      map(currentDiameter, originalHalfFullDiameter, tooFullDiameter * 0.88, blue(halfFullDiameterColor), blue(fullDiameterColor), true)
+    map(currentDiameter, originalHalfFullDiameter, tooFullDiameter * 0.88, blue(halfFullDiameterColor), blue(fullDiameterColor), true)
   );
 
   // draw main circle:
@@ -384,11 +384,11 @@ function lungExplode() {
 
   var i;
   for (i = 0; i < 200; i++) {
-    particles[i] = new Particle(centerX, centerY, random(3,40));
+    particles[i] = new Particle(centerX, centerY, random(3, 40));
   }
 
-  setInterval(function() {
-    if(i <= 230) {
+  setInterval(function () {
+    if (i <= 230) {
       particles[i] = new Particle(centerX, centerY, random(3, 30));
       i++;
     }
@@ -400,18 +400,23 @@ function lungExplode() {
 class Particle {
 
   constructor(x, y, r) {
-    this.pos   = createVector(x, y);
-    this.acc   = createVector(0, 0);
-    this.r     = r ? r : 48;
+    this.pos = createVector(x, y);
+    this.acc = createVector(0, 0);
+    this.r = r ? r : 48;
     this.halfr = r / 2;
 
     var velX, velY, velIsToSlow;
-    do{
+    do {
       velX = random(-10, 10);
       velY = random(-10, 10);
+      if ((Math.abs(velX) + Math.abs(velY)) > 15) {
+        let overSpeed = - ((10 - (Math.abs(velX) + Math.abs(velY))) / 2);
+        velX > 0 ? velX -= overSpeed : velX += overSpeed;
+        velY > 0 ? velY -= overSpeed : velY += overSpeed;
+      }
       velIsToSlow = (velX > -0.4 && velX < 0.4) && (velY > -0.4 && velY < 0.4);
     } while (velIsToSlow);
-    this.vel   = createVector(velX, velY);
+    this.vel = createVector(velX, velY);
   }
 
   applyForce(force) {
@@ -431,22 +436,22 @@ class Particle {
   }
 
   edges() {
-    if(this.pos.y > (height - this.halfr)) {
+    if (this.pos.y > (height - this.halfr)) {
       this.vel.y *= -1;
       this.pos.y = (height - this.halfr);
     }
 
-    if(this.pos.y < 0 + this.halfr) {
+    if (this.pos.y < 0 + this.halfr) {
       this.vel.y *= -1;
       this.pos.y = 0 + this.halfr;
     }
 
-    if(this.pos.x > (width - this.halfr)) {
+    if (this.pos.x > (width - this.halfr)) {
       this.vel.x *= -1;
       this.pos.x = (width - this.halfr);
     }
 
-    if(this.pos.x < this.halfr) {
+    if (this.pos.x < this.halfr) {
       this.vel.x /= -1;
       this.pos.x = this.halfr;
     }
