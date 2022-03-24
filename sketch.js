@@ -268,7 +268,7 @@ function computeCircleDiameter(sinusOffset = 0) {
 
 /** makes lung bigger by tiny amount */
 function fillLung() {
-  halfFullDiameter += 3.1;
+  halfFullDiameter += 0.1;
 }
 
 /** makes lung smaller by tiny amount */
