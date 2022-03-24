@@ -49,8 +49,10 @@ canvas.explosion-state {
   /*text-decoration: underline;*/
   /*text-decoration-color: white;*/
   text-decoration-thickness: 2px;
-  font-family: PPNeueMontreal-Medium, Arial, sans-serif;
-  letter-spacing: 6px;
+  /* font-family: PPNeueMontreal-Medium, Arial, sans-serif;
+  letter-spacing: 6px; */
+  letter-spacing: 2px;
+  transform: scale(1.2);
 }
 
 #fill-area {
@@ -60,8 +62,10 @@ canvas.explosion-state {
   /* text-decoration: underline; */
   /*text-decoration-color: black;*/
   /* text-decoration-thickness: 2px; */
-  font-family: PPNeueMontreal-Medium, Arial, sans-serif;
-  letter-spacing: 6px;
+  /* font-family: PPNeueMontreal-Medium, Arial, sans-serif;
+  /* color: rgb(82, 85, 235); */
+  letter-spacing: 2px;
+  transform: scale(1.2);
 }
 
 .fake-button {
