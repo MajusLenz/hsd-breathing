@@ -1,6 +1,5 @@
 window.addEventListener('load', function () {
     let logoImage = document.getElementById('logoImage');
-    let logo = document.getElementById('logo');
     let docHeight = document.documentElement.offsetHeight;
 
     window.addEventListener('scroll', function () {
