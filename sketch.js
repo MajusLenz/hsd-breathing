@@ -325,15 +325,20 @@ function triggerEndState() {
 
   var timeLeft = localStorage.getItem("countdown");
   if (timeLeft > 0) {
-    seconds = timeLeft;
-  } else {
+    let now = new Date().getTime();
+    let dyingDate = localStorage.getItem("dyingDate");
+
+    let seconds = Math.floor(((24 * 60 * 60 * 1000) - (now - dyingDate)) / 1000);
+    localStorage.setItem("countdown", seconds);
+  }
+  else {
     // Set the date we're counting down to
     var countDownDate = new Date(new Date().getTime() + (24 * 60 * 60 * 1000)).getTime();
-    //console.log(timeLeft);
-    var now = new Date().getTime();
+    let now = new Date().getTime();
+    localStorage.setItem("dyingDate", now);
 
     // Find the distance between now and the count down date
-    var seconds = Math.floor((countDownDate - now) / 1000);
+    let seconds = Math.floor((countDownDate - now) / 1000);
     localStorage.setItem("countdown", seconds);
   }
 
@@ -348,7 +353,6 @@ function triggerEndState() {
     var hours = Math.floor((distance % (60 * 60 * 24)) / (60 * 60));
     var minutes = Math.floor((distance % (60 * 60)) / (60));
     var seconds = Math.floor((distance % (60)));
-    //console.log(seconds)
 
     // Display the result in the element with id="endscreen"
     document.getElementById("countdown").innerHTML = (hours > 9 ? "" : "0") + hours + ":"
@@ -358,6 +362,8 @@ function triggerEndState() {
     if (distance <= 0) {
       clearInterval(x);
       localStorage.removeItem("countdown");
+      localStorage.removeItem("dyingDate");
+      localStorage.removeItem("deathReason");
       window.location.reload();
     }
   }, 1000);
