@@ -54,7 +54,7 @@ body::-webkit-scrollbar {
 
 .img {
     display: block;
-    max-width: 50%;
+    max-width: 45%;
     width: auto;
     height: auto;
 }
@@ -65,9 +65,9 @@ body::-webkit-scrollbar {
     height: auto;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 760px) {
     .img {
-        max-width: 33%;
+        max-width: 30%;
     }
 }
 
