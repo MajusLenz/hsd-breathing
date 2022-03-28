@@ -58,6 +58,12 @@ body::-webkit-scrollbar {
     width: auto;
     height: auto;
 }
+.imgRect {
+    display: block;
+    max-width: 90%;
+    width: auto;
+    height: auto;
+}
 
 @media only screen and (min-width: 600px) {
     .img {
