@@ -1,0 +1,164 @@
+html {
+    scroll-behavior: auto !important;
+}
+
+body {
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.container {
+    max-width: 100vw;
+    width: 100vw;
+    height: 200vh;
+    font-family: normal, normal, medium, PPNeueMontreal-Regular, sans-serif;
+    letter-spacing: 0px;
+    padding: 0;
+    margin: 0;
+}
+
+.megaBold {
+    font-weight: 500;
+    font-size: 100px;
+}
+
+#logo {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+}
+
+#logoImage {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+#logoImageFooter {
+    position: relative;
+    filter: invert(1);
+    width: 100%;
+}
+
+#footer {
+    padding-top: 400px;
+    padding-bottom: 100px;
+}
+
+.img {
+    display: block;
+    max-width: 50%;
+    width: auto;
+    height: auto;
+}
+
+@media only screen and (min-width: 600px) {
+    .img {
+        max-width: 33%;
+    }
+}
+
+
+/*
+    Weight axis: 100 – 900
+    Width axis: 50 – 200
+*/
+@font-face {
+    font-family: "AzeretMono-VariableFont_wght";
+    src: url('/assets/fonts/AzeretMono-VariableFont_wght.ttf') format('truetype');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.breathing {
+    font-family: "AzeretMono-VariableFont_wght";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 80px;
+    background-color: white;
+    white-space: nowrap;
+}
+
+.breathing h1 {
+    font-size: 2em;
+    line-height: 7vw;
+    text-decoration: none;
+    font-variation-settings: 'wght'100;
+}
+
+.breathing h1 .char {
+    --delay: calc((var(--char-index) + 1) * 220ms);
+    /* transition: font-weight 220ms ease-in-out; */
+    animation: breathe 6500ms infinite both;
+    animation-delay: var(--delay);
+
+}
+
+
+@keyframes breathe {
+    0% {
+        font-variation-settings: 'wght'100;
+        font-size: 4vw;
+    }
+
+    60% {
+        font-variation-settings: 'wght'700;
+        font-size: 4.5vw;
+    }
+
+    100% {
+        font-variation-settings: 'wght'100;
+        font-size: 4vw;
+    }
+}
+
+hr {
+    margin: 0;
+    margin-top: 4em;
+    margin-bottom: 1em;
+    border: 0;
+    border-top: 4px solid rgb(0, 0, 0);
+    opacity: 1;
+}
+
+.row>* {
+    padding: 0;
+}
+
+/* .collapsing {
+    -webkit-transition: none;
+    transition: none;
+    display: none;
+} */
+
+.accordion-item {
+    padding: 0;
+    border: 4px solid rgb(0, 0, 0);
+}
+
+.accordion-button:focus {
+    border-color: #ffffff00;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #ffffff;
+    background-color: #000000;
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+
+}
+
+.accordion-button:not(.collapsed)::after {
+    filter: invert();
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
