@@ -21,7 +21,7 @@ var screenOrientation;
 
 var lungIsBeingFilled = false;
 var lungIsBeingEmptied = false;
-var mouseIsInsideCanvas = false;
+var mouseIsInsideCanvas = true;
 var endStateIsActive = false;
 
 var lungIsExploding = false;
